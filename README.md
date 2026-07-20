@@ -1,150 +1,113 @@
 # 2026 World Cup Finalist Performance Analytics
 
-A cloud-based data analytics project comparing Spain and Argentina throughout the 2026 FIFA World Cup and examining how their tournament-level performances differed during the final.
+An end-to-end cloud data analytics portfolio project that collects, processes, stores, analyzes, and visualizes 2026 FIFA World Cup match-performance data using Python, pandas, Azure, SQL, and Power BI.
+
+The current version focuses on comparing Spain and Argentina throughout the 2026 World Cup and examining how their tournament performances differed during the final.
 
 ## Project Goal
 
-Build an end-to-end analytics pipeline using Python, pandas, Azure Blob Storage, Azure SQL Database, SQL, and Power BI.
+The goal of this project is to build a repeatable analytics pipeline that:
 
-The project will answer two main questions:
+1. Extracts World Cup competition, team, match, score, and tournament-stage data from a football API.
+2. Saves raw API responses as timestamped JSON files.
+3. Cleans and transforms match data using Python and pandas.
+4. Validates processed datasets before cloud storage and database loading.
+5. Stores raw and processed files in Azure Blob Storage.
+6. Loads validated relational datasets into Azure SQL Database.
+7. Analyzes team performance using SQL.
+8. Prepares dashboard-ready SQL views for Power BI.
+9. Builds an interactive Power BI dashboard comparing tournament and final-match performance.
 
-1. How did Spain and Argentina perform throughout the tournament?
-2. Which performance factors changed most significantly during the final?
+## Analysis Questions
 
-## Planned Architecture
+This project is focused on answering questions such as:
 
-Football API and verified match statistics
-↓
-Python extraction
-↓
-Azure Blob Storage
-↓
-pandas transformation and validation
-↓
-Azure SQL Database
-↓
-SQL reporting views
-↓
-Power BI dashboard
-
-## Current Status
-
-* [x] Repository structure
-* [x] Python virtual environment
-* [x] Dependency management
-* [x] Secure environment configuration
-* [ ] API connection
-* [ ] Raw data extraction
-* [ ] Data transformation
-* [ ] Data validation
-* [ ] Azure Blob Storage
-* [ ] Azure SQL Database
-* [ ] SQL analysis
-* [ ] Power BI dashboard
+* How did Spain and Argentina perform throughout the 2026 World Cup?
+* How did each team perform by tournament round?
+* Did each finalist reach the final through attack, defense, or both?
+* How did goals scored and conceded change throughout the tournament?
+* Which matches were the biggest turning points?
+* How did each team’s final performance compare with its tournament average?
+* Which metrics changed most significantly during the final?
+* Why was Argentina less effective in the final than during the rest of the tournament?
+* Which areas of Spain’s performance helped it control the final?
 
 ## Technology Stack
 
+Currently implemented:
+
 * Python
 * pandas
-* REST APIs
-* Azure Blob Storage
-* Azure SQL Database
-* SQL
-* Power BI
+* requests
+* python-dotenv
+* football-data.org API
 * Git
 * GitHub
 
-## Planned Analysis
+Planned:
 
-The project will compare Spain and Argentina across the full 2026 World Cup tournament and analyze how their performances changed during the final.
+* Azure Blob Storage
+* Azure SQL Database
+* SQL
+* SQLAlchemy
+* Power BI Desktop
+* DAX
 
-Planned metrics include:
-
-* Match results
-* Wins, draws, and losses
-* Goals scored
-* Goals conceded
-* Goal difference
-* Clean sheets
-* Win margins
-* Shots
-* Shots on target
-* Expected goals
-* Possession
-* Pass accuracy
-* Performance by tournament round
-* Final-match performance compared with tournament averages
-
-## Planned Power BI Dashboard
-
-The Power BI dashboard will contain two main pages.
-
-### Page 1: Tournament Performance
-
-This page will compare Spain and Argentina throughout the tournament.
-
-Planned visuals include:
-
-* KPI cards for wins, goals scored, goals conceded, goal difference, and clean sheets
-* Match-by-match goals scored and conceded
-* Cumulative goal difference
-* Round-by-round performance
-* Tournament path comparison
-* Spain versus Argentina tournament averages
-
-### Page 2: Final Match Analysis
-
-This page will compare each team’s final-match performance with its previous tournament averages.
-
-Planned visuals include:
-
-* Tournament average versus final performance
-* Shots and shots on target comparison
-* Expected goals comparison
-* Possession comparison
-* Passing accuracy comparison
-* Percentage change by metric
-* Key factors that explain the final result
-
-## Repository Structure
+## Project Structure
 
 ```text
-world-cup-finalist-performance-analytics/
-├── README.md
-├── .gitignore
-├── .env.example
-├── requirements.txt
-├── config/
-│   └── settings.py
-├── data/
-│   ├── raw/
-│   │   ├── api/
-│   │   └── reference/
-│   ├── processed/
-│   └── validation/
-├── src/
-│   ├── extract/
-│   ├── transform/
-│   ├── validate/
-│   └── load/
-├── sql/
-├── dashboard/
-│   └── screenshots/
-├── docs/
-├── tests/
-└── notebooks/
+config/
+└── settings.py
+
+data/
+├── raw/
+│   ├── api/
+│   └── reference/
+├── processed/
+└── validation/
+
+src/
+├── extract/
+│   ├── __init__.py
+│   └── test_api_connection.py
+├── transform/
+├── validate/
+└── load/
+
+sql/
+
+dashboard/
+└── screenshots/
+
+docs/
+├── data_sources.md
+└── project_log.md
+
+tests/
+
+notebooks/
+
+README.md
+requirements.txt
+.env.example
+.gitignore
 ```
 
-## Security
+## Current Progress
 
-API keys, Azure credentials, database passwords, storage connection strings, and other sensitive information will be stored in a local `.env` file.
+* Created the GitHub repository and project structure.
+* Created and configured a Python virtual environment.
+* Installed the initial Python dependencies.
+* Added secure environment-variable configuration.
+* Added `.gitignore` rules for credentials, generated files, and the virtual environment.
+* Connected successfully to the football-data.org API.
+* Retrieved the FIFA World Cup competition and 2026 season information.
+* Confirmed access to all 104 tournament matches.
 
-The `.env` file will not be committed to GitHub.
+## Running the API Connection Test
 
-A public `.env.example` file will document the required environment variables without exposing real credentials.
+After activating the virtual environment and configuring the local `.env` file, run the connection test from the project root:
 
-## Project Status
-
-This project is currently in development.
-
-The first milestone is setting up the repository, Python environment, dependencies, secure configuration, and football API connection.
+```bash
+python -m src.extract.test_api_connection
+```
