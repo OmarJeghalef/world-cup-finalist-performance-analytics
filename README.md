@@ -99,10 +99,14 @@ requirements.txt
 * Created and configured a Python virtual environment.
 * Installed the initial Python dependencies.
 * Added secure environment-variable configuration.
-* Added `.gitignore` rules for credentials, generated files, and the virtual environment.
 * Connected successfully to the football-data.org API.
-* Retrieved the FIFA World Cup competition and 2026 season information.
-* Confirmed access to all 104 tournament matches.
+* Confirmed access to the 2026 FIFA World Cup season and all 104 tournament matches.
+* Built a repeatable extraction script for competition and match data.
+* Saved timestamped raw JSON files for the complete tournament, Spain, and Argentina.
+* Transformed nested API responses into clean team, match, and team-performance CSV datasets using pandas.
+* Created one team-perspective performance row for each side in every match.
+* Calculated match results, goal difference, clean sheets, win margins, and cumulative scoring metrics.
+* Added automated validation for schema, nulls, uniqueness, dates, scores, team relationships, and calculated fields.
 
 ## Running the API Connection Test
 
@@ -130,3 +134,54 @@ Generated raw files are stored in:
 ```text
 data/raw/api/
 ````
+
+## Transform
+
+`src/transform/transform_world_cup_data.py` reads the latest raw World Cup match
+response and creates analysis-ready CSV datasets with pandas.
+
+Processed outputs include:
+
+```text
+data/processed/teams.csv
+data/processed/matches.csv
+data/processed/team_match_performance.csv
+```
+
+The team-match dataset contains one row per team per match and includes match
+results, goals scored, goals conceded, goal difference, clean sheets, win
+margins, match duration, and cumulative performance fields.
+
+Run the transformation from the project root:
+
+```bash
+python -m src.transform.transform_world_cup_data
+```
+
+## Validate
+
+`src/validate/validate_world_cup_data.py` checks the processed datasets before
+cloud storage and database loading.
+
+Validation checks include:
+
+* Required files and columns
+* Critical null values
+* Unique IDs
+* Valid match dates, scores, stages, and durations
+* Exactly two team-performance rows per match
+* Correct goal-difference and clean-sheet calculations
+* Consistent opposing team scores
+* Presence of Spain and Argentina
+
+Run validation from the project root:
+
+```bash
+python -m src.validate.validate_world_cup_data
+```
+
+The generated validation report is saved under:
+
+```text
+data/validation/validation_report.json
+```
