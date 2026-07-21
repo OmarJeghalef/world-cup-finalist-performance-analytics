@@ -31,7 +31,7 @@ def create_headers() -> dict[str, str]:
     """Create the authentication headers required by football-data.org."""
 
     return {
-        "X-Auth-Token": FOOTBALL_DATA_API_KEY,
+        "X-Auth-Token": FOOTBALL_DATA_API_KEY, # type: ignore
         "Accept": "application/json",
     }
 

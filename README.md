@@ -111,3 +111,22 @@ After activating the virtual environment and configuring the local `.env` file, 
 ```bash
 python -m src.extract.test_api_connection
 ```
+
+## Extract
+
+`src/extract/extract_world_cup_data.py` retrieves competition and match data from
+the football-data.org API.
+
+The script saves timestamped raw JSON files for:
+
+- World Cup competition metadata
+- All tournament matches
+- Spain matches
+- Argentina matches
+- Extraction-run metadata
+
+Generated raw files are stored in:
+
+```text
+data/raw/api/
+````
