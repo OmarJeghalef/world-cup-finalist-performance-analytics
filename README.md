@@ -107,6 +107,12 @@ requirements.txt
 * Created one team-perspective performance row for each side in every match.
 * Calculated match results, goal difference, clean sheets, win margins, and cumulative scoring metrics.
 * Added automated validation for schema, nulls, uniqueness, dates, scores, team relationships, and calculated fields.
+* Created an Azure Storage account using standard locally redundant storage.
+* Created separate private Blob containers for raw, processed, and validation data.
+* Added secure Azure Blob Storage configuration through environment variables.
+* Built a Python upload process for raw JSON, processed CSV, and validation-report files.
+* Uploaded the current ETL pipeline outputs to Azure Blob Storage.
+* Verified the Azure connection, containers, blob names, and uploaded file sizes.
 
 ## Running the API Connection Test
 
@@ -185,3 +191,29 @@ The generated validation report is saved under:
 ```text
 data/validation/validation_report.json
 ```
+
+## Azure Blob Storage
+
+Azure Blob Storage provides the cloud file-storage layer for the project.
+
+The storage account contains three private containers:
+
+```text
+raw
+processed
+validation
+```
+
+`src/load/upload_to_blob.py` uploads:
+
+* Timestamped API JSON files to the `raw` container
+* Clean CSV datasets to the `processed` container
+* Data-quality reports to the `validation` container
+
+Run the cloud upload after extraction, transformation, and validation:
+
+```bash
+python -m src.load.upload_to_blob
+```
+
+Azure credentials are stored in the local `.env` file and are not committed to GitHub.
