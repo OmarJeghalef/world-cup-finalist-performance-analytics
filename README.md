@@ -34,8 +34,6 @@ This project is focused on answering questions such as:
 
 ## Technology Stack
 
-Currently implemented:
-
 * Python
 * pandas
 * requests
@@ -43,9 +41,6 @@ Currently implemented:
 * football-data.org API
 * Git
 * GitHub
-
-Planned:
-
 * Azure Blob Storage
 * Azure SQL Database
 * SQL
@@ -59,63 +54,47 @@ Planned:
 config/
 └── settings.py
 
+dashboard/
+└── screenshots/
+
 data/
+├── processed/
 ├── raw/
 │   ├── api/
 │   └── reference/
-├── processed/
 └── validation/
-
-src/
-├── extract/
-│   ├── __init__.py
-│   └── test_api_connection.py
-├── transform/
-├── validate/
-└── load/
-    ├── __init__.py
-    ├── upload_to_blob.py
-    └── test_blob_connection.py
-
-sql/
-
-dashboard/
-└── screenshots/
 
 docs/
 ├── data_sources.md
 └── project_log.md
 
-tests/
-
 notebooks/
 
-README.md
-requirements.txt
+sql/
+
+src/
+├── extract/
+│   ├── __init__.py
+│   ├── extract_world_cup_data.py
+│   └── test_api_connection.py
+├── load/
+│   ├── __init__.py
+│   ├── upload_to_blob.py
+│   └── test_blob_connection.py
+│── transform/
+│   ├── __init__.py
+│   └── transform_world_cup_data.py
+└── validate/
+    ├── __init__.py
+    └── validate_world_cup_data.py
+
+tests/
+
 .env.example
 .gitignore
+README.md
+requirements.txt
 ```
-
-## Current Progress
-
-* Created the GitHub repository and project structure.
-* Created and configured a Python virtual environment.
-* Installed the initial Python dependencies.
-* Added secure environment-variable configuration.
-* Connected successfully to the football-data.org API.
-* Confirmed access to the 2026 FIFA World Cup season and all 104 tournament matches.
-* Built a repeatable extraction script for competition and match data.
-* Saved timestamped raw JSON files for the complete tournament, Spain, and Argentina.
-* Transformed nested API responses into clean team, match, and team-performance CSV datasets using pandas.
-* Created one team-perspective performance row for each side in every match.
-* Calculated match results, goal difference, clean sheets, win margins, and cumulative scoring metrics.
-* Added automated validation for schema, nulls, uniqueness, dates, scores, team relationships, and calculated fields.
-* Created an Azure Storage account using standard locally redundant storage.
-* Created separate private Blob containers for raw, processed, and validation data.
-* Added secure Azure Blob Storage configuration through environment variables.
-* Built a Python upload process for raw JSON, processed CSV, and validation-report files.
-* Uploaded the current ETL pipeline outputs to Azure Blob Storage.
-* Verified the Azure connection, containers, blob names, and uploaded file sizes.
 
 ## Running the API Connection Test
 
@@ -218,5 +197,3 @@ Run the cloud upload after extraction, transformation, and validation:
 ```bash
 python -m src.load.upload_to_blob
 ```
-
-Azure credentials are stored in the local `.env` file and are not committed to GitHub.
