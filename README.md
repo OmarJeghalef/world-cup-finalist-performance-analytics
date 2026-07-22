@@ -73,6 +73,9 @@ src/
 ├── transform/
 ├── validate/
 └── load/
+    |── __init__.py
+    ├── upload_to_blob.py
+    └── test_blob_connection.py
 
 sql/
 
